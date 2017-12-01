@@ -12,30 +12,69 @@ namespace SAP_DD_V2
 {
     public partial class Menu : Form
     {
+        private int childFormNumber = 0;
+        
         public Menu()
         {
-            InitializeComponent();
-        }
-        
-        private void button1_Click(object sender, EventArgs e)
-        {
-            String login =(Convert.ToString (login_bx.SelectedItem));
-            String Senha = (senha_bx.Text);
             
-            switch (login)
-            {
-                case "Operador":
-                    this.Visible =false;
-                    Operador form = new Operador();
-                    form.ShowDialog();
-                    this.Dispose();
-              
-                    break;
-                    
+            InitializeComponent();
+            Login login = new Login();
+            login.MdiParent = this;
+            login.Show();
 
+        }
+
+        private void ShowNewForm(object sender, EventArgs e)
+        {
+            
+            Form childForm = new Form();
+            childForm.MdiParent = this;
+            childForm.Text = "Janela " + childFormNumber++;
+            childForm.Show();
+            
+        }
+
+
+        private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+      
+
+        private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LayoutMdi(MdiLayout.Cascade);
+        }
+
+        private void TileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LayoutMdi(MdiLayout.TileVertical);
+        }
+
+        private void TileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LayoutMdi(MdiLayout.TileHorizontal);
+        }
+
+        private void ArrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LayoutMdi(MdiLayout.ArrangeIcons);
+        }
+
+        private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form childForm in MdiChildren)
+            {
+                childForm.Close();
             }
         }
 
-    
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+        }
     }
 }
